@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#0a0f1e" />
+<meta name="description" content="Chat With Strangers — Anonymous, private, global chat. Talk to someone new. Feel something real." />
+<title>Chat With Strangers — Talk to someone new</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="animated-bg"></div>
+<div class="floating-flags" id="floatingFlags"></div>
+
+<!-- ================= LANDING PAGE ================= -->
+<div id="landingScreen" class="screen">
+  <nav class="landing-nav">
+    <div class="brand brand-landing">Chat With <span>Strangers</span></div>
+    <div class="online-badge nav-badge">
+      <span class="dot"></span><span id="onlineCountLanding">0</span> online now
+    </div>
+  </nav>
+
+  <main class="landing-hero">
+    <div class="hero-left">
+      <div class="pill-badge">🌍 Anonymous · Global · Private</div>
+      <h1 class="hero-title">
+        Talk to someone new.<br />
+        <span class="gradient-text">Feel something real.</span>
+      </h1>
+      <p class="hero-sub" id="rotatingTagline">
+        A stranger is just a friend you haven't met yet.
+      </p>
+
+      <div class="hero-actions">
+        <button id="startChatBtn" class="primary big">Start Chatting →</button>
+        <button id="learnMoreBtn" class="ghost big">How it works</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" id="statOnline">0</span>
+          <span class="stat-label">Online</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">120+</span>
+          <span class="stat-label">Countries</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Anonymous</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="chat-demo">
+          <div class="demo-msg them">Hey 👋 Where are you from?</div>
+          <div class="demo-msg me">India 🇮🇳 You?</div>
+          <div class="demo-msg them">Brazil 🇧🇷 Nice to meet you!</div>
+          <div class="demo-typing"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section class="features-strip">
+    <div class="feature-item">
+      <div class="feat-icon">🔒</div>
+      <h3>Completely Private</h3>
+      <p>Your chats aren't stored or shared. Ever.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon">🎯</div>
+      <h3>Smart Matching</h3>
+      <p>Filter by gender, country, and interests.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon">🎥</div>
+      <h3>Video Chat</h3>
+      <p>Turn on your camera for face-to-face strangers.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feat-icon">🎮</div>
+      <h3>Ice Breakers</h3>
+      <p>Get suggested openers when chat goes silent.</p>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <p>© 2025 Chat With Strangers · Made for genuine human connection · <a href="#" id="footerTerms">Terms</a></p>
+  </footer>
+</div>
+
+<!-- ================= AUTH SCREEN ================= -->
+<div id="authScreen" class="screen hidden">
+  <div class="card">
+    <h1 class="logo" id="backToLanding">Chat With <span>Strangers</span></h1>
+    <p class="tagline">Talk to someone new. Feel something real.</p>
+    <div class="online-badge"><span class="dot"></span><span id="onlineCountAuth">0</span> online now</div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="login">Login</button>
+      <button class="tab" data-tab="register">Sign Up</button>
+    </div>
+
+    <form id="loginForm" class="form active">
+      <input type="text" id="loginUser" placeholder="Username or email" required autocomplete="username" />
+      <input type="password" id="loginPass" placeholder="Password" required autocomplete="current-password" />
+      <button type="submit" class="primary">Login</button>
+    </form>
+
+    <form id="registerForm" class="form">
+      <input type="text" id="regUser" placeholder="Username" required autocomplete="username" />
+      <input type="email" id="regEmail" placeholder="Email (for verification)" autocomplete="email" />
+      <input type="password" id="regPass" placeholder="Password" required autocomplete="new-password" />
+      <select id="regCountry"></select>
+      <select id="regGender">
+        <option value="any">Gender: Prefer not to say</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <input type="text" id="regInterests" placeholder="Interests (comma separated)" />
+      <button type="submit" class="primary">Create Account</button>
+      <p class="note">Email is optional — you can verify later.</p>
+    </form>
+
+    <div class="divider"><span>or</span></div>
+    <button id="guestBtn" class="ghost">Continue as Guest</button>
+    <p class="note">Guest chats auto-saved on this device.</p>
+  </div>
+</div>
+
+<!-- ================= FILTERS MODAL (before matching) ================= -->
+<div id="filtersModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Who do you want to meet?</h2>
+    <p class="note" style="text-align:left;margin-bottom:10px;">Pick filters, then click Find Stranger.</p>
+
+    <label>Gender</label>
+    <select id="filterGender">
+      <option value="any">Anyone</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label>Country</label>
+    <select id="filterCountry">
+      <option value="any">Any country</option>
+    </select>
+
+    <label>Your interests (comma separated)</label>
+    <input type="text" id="filterInterests" placeholder="music, gaming, travel…" />
+
+    <div class="modal-actions">
+      <button id="filtersCancel" class="ghost">Cancel</button>
+      <button id="filtersStart" class="primary">Find Stranger →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CHAT SCREEN ================= -->
+<div id="chatScreen" class="screen hidden">
+  <header>
+    <div class="brand">Chat With <span>Strangers</span></div>
+    <div class="user-info">
+      <div class="online-pill">
+        <span class="dot"></span><span id="onlineCountChat">0</span>
+      </div>
+      <button id="friendsBtn" class="icon-btn" title="Friends">👥</button>
+      <div class="avatar-wrap">
+        <img id="myAvatar" class="avatar" alt="" />
+        <label class="avatar-edit" title="Change picture">
+          ✎<input type="file" id="avatarInput" accept="image/*" hidden />
+        </label>
+      </div>
+      <div class="meta">
+        <span id="userName">Guest</span>
+        <span id="userCountry" class="small-text"></span>
+      </div>
+      <button id="themeBtn" class="icon-btn" title="Toggle theme">🌙</button>
+      <button id="profileBtn" class="icon-btn" title="Profile">⚙</button>
+      <button id="logoutBtn" class="icon-btn" title="Logout">⎋</button>
+    </div>
+  </header>
+
+  <div class="status" id="statusBar">Looking for a stranger…</div>
+
+  <main id="messages" class="messages"></main>
+
+  <!-- Ice breaker suggestion -->
+  <div id="iceBreakerBar" class="icebreaker hidden">
+    <span class="ib-label">💡 Try asking:</span>
+    <span id="iceBreakerText"></span>
+    <button id="newIceBreaker" class="small-action">↻</button>
+  </div>
+
+  <div id="typingIndicator" class="typing hidden">
+    <span></span><span></span><span></span> Stranger is typing…
+  </div>
+
+  <div id="partnerActions" class="partner-actions hidden">
+    <button id="videoBtn" class="small-action">🎥 Video</button>
+    <button id="addFriendBtn" class="small-action">➕ Add Friend</button>
+    <button id="reportBtn" class="small-action danger">🚫 Report</button>
+    <button id="blockBtn" class="small-action danger">⛔ Block</button>
+  </div>
+
+  <footer>
+    <button id="imageBtn" class="attach-btn" title="Send image">🖼️</button>
+    <button id="micBtn" class="attach-btn" title="Voice message">🎙️</button>
+    <input type="file" id="imageInput" accept="image/*" hidden />
+    <input type="text" id="msgInput" placeholder="Type a private message…" disabled autocomplete="off" />
+    <button id="sendBtn" class="primary" disabled>Send</button>
+    <button id="nextBtn" class="ghost small" title="Find new stranger">Next ⟶</button>
+  </footer>
+
+  <div id="recordingBar" class="recording-bar hidden">
+    <span class="rec-dot"></span> Recording… <span id="recTime">0:00</span>
+    <button id="stopRecBtn" class="small-action danger">Stop & Send</button>
+    <button id="cancelRecBtn" class="small-action">Cancel</button>
+  </div>
+</div>
+
+<!-- ================= VIDEO OVERLAY ================= -->
+<div id="videoOverlay" class="video-overlay hidden">
+  <div class="video-container">
+    <video id="remoteVideo" autoplay playsinline class="remote-video"></video>
+    <video id="localVideo" autoplay playsinline muted class="local-video"></video>
+    <div class="video-controls">
+      <button id="videoEndBtn" class="primary">End Video</button>
+      <button id="videoMuteBtn" class="ghost">Mute</button>
+      <button id="videoCamBtn" class="ghost">Camera Off</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FRIENDS MODAL ================= -->
+<div id="friendsModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Your Friends</h2>
+    <div id="friendsList" class="friends-list">
+      <p class="note">No friends yet. Chat with someone and click ➕ Add Friend.</p>
+    </div>
+    <div class="modal-actions">
+      <button id="friendsClose" class="primary">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PROFILE MODAL ================= -->
+<div id="profileModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Your Profile</h2>
+    <label>Country</label>
+    <select id="profileCountry"></select>
+    <label>Gender</label>
+    <select id="profileGender">
+      <option value="any">Prefer not to say</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+    <label>Interests (comma separated)</label>
+    <input type="text" id="profileInterests" placeholder="music, gaming, travel…" />
+    <div class="modal-actions">
+      <button id="profileCancel" class="ghost">Cancel</button>
+      <button id="profileSave" class="primary">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= IMAGE PREVIEW MODAL ================= -->
+<div id="imgPreviewModal" class="modal hidden">
+  <div class="img-preview-card">
+    <img id="imgPreview" alt="preview" />
+    <div class="modal-actions">
+      <button id="imgCancel" class="ghost">Cancel</button>
+      <button id="imgSend" class="primary">Send</button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
