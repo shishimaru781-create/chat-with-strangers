@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /uploads/
+Disallow: /api/
+
+Sitemap: https://chat-with-strangers-uwc6.onrender.com

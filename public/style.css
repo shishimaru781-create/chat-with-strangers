@@ -889,3 +889,99 @@ footer input[type="text"] { flex: 1; min-width: 0; }
   footer { padding: 6px 12px; }
   .typing { display: none; }
 }
+/* ============ SHARE BUTTONS ============ */
+.share-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.share-label {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.share-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.share-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.share-btn.whatsapp {
+  background: rgba(37, 211, 102, 0.12);
+  border-color: rgba(37, 211, 102, 0.35);
+  color: #25d366;
+}
+.share-btn.whatsapp:hover {
+  background: rgba(37, 211, 102, 0.2);
+}
+.share-btn.twitter {
+  background: rgba(29, 161, 242, 0.12);
+  border-color: rgba(29, 161, 242, 0.35);
+  color: #1da1f2;
+}
+.share-btn.twitter:hover {
+  background: rgba(29, 161, 242, 0.2);
+}
+.share-btn.copy {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.35);
+  color: var(--accent-hi);
+}
+.share-btn.copy:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+/* Toast (for copy-link feedback) */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--accent);
+  color: white;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  z-index: 999;
+  opacity: 0;
+  transition: 0.3s;
+  pointer-events: none;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Mobile adjustment for share row */
+@media (max-width: 720px) {
+  .share-row {
+    justify-content: center;
+    gap: 8px;
+  }
+  .share-label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .share-btn {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+}

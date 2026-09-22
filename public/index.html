@@ -5,6 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="theme-color" content="#0a0f1e" />
 <meta name="description" content="Chat With Strangers — Anonymous, private, global chat. Talk to someone new. Feel something real." />
+<meta name="keywords" content="chat with strangers, talk to strangers, anonymous chat, omegle alternative, random chat, stranger chat, video chat" />
+<meta name="author" content="Chat With Strangers" />
+<meta name="robots" content="index, follow" />
+
+<!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Chat With Strangers — Talk to someone new" />
+<meta property="og:description" content="Anonymous, private, global chat with strangers. No signup required." />
+<meta property="og:image" content="/og-image.svg" />
+<meta property="og:url" content="/" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Chat With Strangers — Talk to someone new" />
+<meta name="twitter:description" content="Anonymous, private, global chat with strangers. No signup required." />
+<meta name="twitter:image" content="/og-image.svg" />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="canonical" href="/" />
+
 <title>Chat With Strangers — Talk to someone new</title>
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -35,6 +56,14 @@
       <div class="hero-actions">
         <button id="startChatBtn" class="primary big">Start Chatting →</button>
         <button id="learnMoreBtn" class="ghost big">How it works</button>
+      </div>
+
+      <!-- SHARE BUTTONS -->
+      <div class="share-row">
+        <span class="share-label">Invite friends:</span>
+        <button class="share-btn whatsapp" id="shareWhatsapp" title="Share on WhatsApp">💬 WhatsApp</button>
+        <button class="share-btn twitter" id="shareTwitter" title="Share on Twitter">🐦 Twitter</button>
+        <button class="share-btn copy" id="shareCopy" title="Copy link">🔗 Copy Link</button>
       </div>
 
       <div class="hero-stats">
@@ -90,7 +119,7 @@
   </section>
 
   <footer class="landing-footer">
-    <p>© 2025 Chat With Strangers · Made for genuine human connection · <a href="#" id="footerTerms">Terms</a></p>
+    <p>© 2025 Chat With Strangers · Made for genuine human connection · <a href="#" id="footerTerms">Terms</a> · <a href="#" id="footerPrivacy">Privacy</a></p>
   </footer>
 </div>
 
@@ -134,7 +163,7 @@
   </div>
 </div>
 
-<!-- ================= FILTERS MODAL (before matching) ================= -->
+<!-- ================= FILTERS MODAL ================= -->
 <div id="filtersModal" class="modal hidden">
   <div class="modal-card">
     <h2>Who do you want to meet?</h2>
@@ -192,7 +221,6 @@
 
   <main id="messages" class="messages"></main>
 
-  <!-- Ice breaker suggestion -->
   <div id="iceBreakerBar" class="icebreaker hidden">
     <span class="ib-label">💡 Try asking:</span>
     <span id="iceBreakerText"></span>
@@ -284,6 +312,16 @@
     </div>
   </div>
 </div>
+
+<!-- ================= ANALYTICS (replace with your GA ID) ================= -->
+<!-- Google Analytics placeholder — see instructions -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="app.js"></script>

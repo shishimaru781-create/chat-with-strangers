@@ -1,0 +1,16 @@
+{
+  "name": "Chat With Strangers",
+  "short_name": "Chat",
+  "description": "Anonymous, private, global chat with strangers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f1e",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

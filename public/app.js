@@ -902,3 +902,144 @@ document.getElementById('profileSave').onclick = async () => {
   await loadIceBreakers();
   if (token && user) openFilters();
 })();
+/* ============================================================
+   GROWTH PACK — Share buttons, toast, visitor tracking
+   ============================================================ */
+
+// ============ TOAST ============
+function showToast(message, duration = 2000) {
+  let toast = document.getElementById('cwsToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'cwsToast';
+    toast.className = 'toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), duration);
+}
+
+// ============ SHARE BUTTONS ============
+function getSiteUrl() {
+  return window.location.origin;
+}
+function getShareText() {
+  return "I'm on Chat With Strangers — anonymous global chat. No signup needed. Come talk to someone new! 🌍";
+}
+
+// WhatsApp
+const whatsappBtn = document.getElementById('shareWhatsapp');
+if (whatsappBtn) {
+  whatsappBtn.onclick = () => {
+    const url = `https://wa.me/?text=${encodeURIComponent(getShareText() + '\n' + getSiteUrl())}`;
+    window.open(url, '_blank');
+  };
+}
+
+// Twitter
+const twitterBtn = document.getElementById('shareTwitter');
+if (twitterBtn) {
+  twitterBtn.onclick = () => {
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}&url=${encodeURIComponent(getSiteUrl())}`;
+    window.open(url, '_blank');
+  };
+}
+
+// Copy link
+const copyBtn = document.getElementById('shareCopy');
+if (copyBtn) {
+  copyBtn.onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(getSiteUrl());
+      showToast('✅ Link copied!');
+    } catch {
+      // Fallback for old browsers
+      const ta = document.createElement('textarea');
+      ta.value = getSiteUrl();
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+      showToast('✅ Link copied!');
+    }
+  };
+}
+
+// ============ WHATSAPP INVITE BANNER (after 3 messages) ============
+let messageCount = 0;
+let inviteShown = false;
+const _origAddMessage = addMessage;
+addMessage = function(payload, sender) {
+  _origAddMessage(payload, sender);
+  messageCount++;
+  if (messageCount === 3 && !inviteShown && sender === 'them') {
+    inviteShown = true;
+    setTimeout(() => {
+      const bar = document.createElement('div');
+      bar.className = 'icebreaker';
+      bar.style.background = 'rgba(37, 211, 102, 0.12)';
+      bar.style.borderTopColor = 'rgba(37, 211, 102, 0.3)';
+      bar.style.borderBottomColor = 'rgba(37, 211, 102, 0.3)';
+      bar.innerHTML = `
+        <span style="flex:1;">💚 Enjoying? Invite a friend!</span>
+        <button class="small-action" id="inviteFriendBtn" style="border-color:rgba(37,211,102,0.5);color:#25d366;">Share</button>
+      `;
+      const footer = document.querySelector('#chatScreen footer');
+      footer.parentNode.insertBefore(bar, footer);
+      document.getElementById('inviteFriendBtn').onclick = () => {
+        const url = `https://wa.me/?text=${encodeURIComponent(getShareText() + '\n' + getSiteUrl())}`;
+        window.open(url, '_blank');
+      };
+      setTimeout(() => bar.remove(), 20000);
+    }, 500);
+  }
+};
+
+// ============ VISITOR TRACKING ============
+(function trackVisitor() {
+  try {
+    const stored = localStorage.getItem('cws_visitor');
+    if (!stored) {
+      const id = 'v_' + Math.random().toString(36).slice(2, 10) + Date.now();
+      localStorage.setItem('cws_visitor', id);
+      console.log('👋 New visitor:', id);
+    } else {
+      console.log('👋 Returning visitor');
+    }
+  } catch (e) {}
+})();
+
+// ============ TERMS & PRIVACY ============
+const termsLink = document.getElementById('footerTerms');
+if (termsLink) {
+  termsLink.onclick = (e) => {
+    e.preventDefault();
+    alert(
+      'Terms of Service\n\n' +
+      '1. You must be 18 years or older.\n' +
+      '2. Be respectful. No harassment, hate speech, or illegal content.\n' +
+      '3. Do not share personal information you would not want public.\n' +
+      '4. Chats are private and not stored long-term.\n' +
+      '5. We may ban users who violate these terms.\n' +
+      '6. Use at your own risk. Meet strangers safely.'
+    );
+  };
+}
+
+const privacyLink = document.getElementById('footerPrivacy');
+if (privacyLink) {
+  privacyLink.onclick = (e) => {
+    e.preventDefault();
+    alert(
+      'Privacy Policy\n\n' +
+      'We collect: username, country, and optional email.\n\n' +
+      'We do NOT: sell your data, track your location precisely, or read your chats.\n\n' +
+      'Messages are stored on our server temporarily for session continuity, ' +
+      'then deleted. Uploaded images/audio are cleared when the server restarts.\n\n' +
+      'Contact: privacy@chatwithstrangers.app'
+    );
+  };
+}
+
+console.log('🚀 Growth pack loaded');
